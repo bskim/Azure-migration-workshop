@@ -1,0 +1,18 @@
+{
+  "selected_databases": [
+    {
+      "name": "workshop",
+      "target_database_name": "workshop",
+      "table_map": {
+        "workshop.items": "workshop.items",
+        "workshop.batches": "workshop.batches",
+        "workshop.batch_items": "workshop.batch_items"
+      },
+      "select_database_for_schema_migration": true
+    }
+  ],
+  "migrate_all_tables_schema": true,
+  "migrate_full_server": false,
+  "make_source_server_read_only": false,
+  "migrate_user_system_tables": false
+}

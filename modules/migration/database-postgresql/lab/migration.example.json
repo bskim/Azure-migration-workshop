@@ -1,0 +1,21 @@
+{
+  "properties": {
+    "sourceDbServerResourceId": "<approved-private-source-host>:5432@<source-user>",
+    "sourceType": "AzureVM",
+    "sslMode": "Require",
+    "dbsToMigrate": ["workshop"],
+    "migrationMode": "Offline",
+    "migrationOption": "Validate",
+    "overwriteDbsInTarget": "False",
+    "migrateRoles": "False",
+    "startDataMigration": "False",
+    "secretParameters": {
+      "adminCredentials": {
+        "sourceServerPassword": "<source-secret-from-approved-private-store>",
+        "targetServerPassword": "<target-secret-from-approved-private-store>"
+      },
+      "sourceServerUsername": "<source-user>",
+      "targetServerUsername": "<target-user>"
+    }
+  }
+}

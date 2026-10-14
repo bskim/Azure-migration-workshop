@@ -1,0 +1,7 @@
+{
+  "serverName": "<approved-private-mysql-host>",
+  "port": 3306,
+  "userName": "<approved-engine-user>",
+  "password": "<secret-from-approved-private-store>",
+  "encryptConnection": true
+}

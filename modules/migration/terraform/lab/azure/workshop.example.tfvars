@@ -1,0 +1,6 @@
+subscription_id  = "<sandbox-subscription-id>"
+location         = "<approved-region>"
+lab_id           = "replace1"
+container_image  = "<registry-login-server>/workshop/app@sha256:<digest>"
+registry_server  = "<registry-login-server>"
+pull_identity_id = "<approved-user-assigned-identity-resource-id>"
