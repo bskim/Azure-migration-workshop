@@ -199,6 +199,8 @@ A/B의 목표를 바꾸지 않는 선택 비교로 `pg_dump`/`pg_restore`의 log
 이 비교 결과를 native migration service job 성공으로 쓰지 않습니다. 실제 cutover는 [계획](../planning/README-ko.md)의 최종 sync·쓰기 정지·go/no-go·connection 변경·target 관찰/rollback을 따릅니다. target 새 writes 뒤 connection만 되돌리는 것은 data rollback이 아닙니다.
 
 
+**선택 마무리:** native 작업과 schema/data 비교를 마친 뒤, 승인된 SQL client로 target FQDN·`workshop`에 새 연결을 만들고 기존 검증 query를 읽기 실행합니다. [target client 마무리](../cutover/README-ko.md#45a-이전-결과를-새-client에서-사용하는-마무리)에 실제 대상·총 30행·join 10행·sum 55와 관찰 결과를 기록합니다. source·backup과 원래 profile은 보존합니다. 앱 adapter 없이 진행하며, [실제 source 준비 과제](../planning/README-ko.md#48-합성-source를-실제-source로-바꿀-때의-준비-과제)에서 엔진/extension·권한·연결·변경분·복구 질문을 정리합니다.
+
 ## 5. 대표 실패
 
 

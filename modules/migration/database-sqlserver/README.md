@@ -190,6 +190,8 @@ Apply source write stop, final sync/backup, native/schema/data/feature evidence,
 - [Cutover](../cutover/README.md)
 - [Planning](../planning/README.md)
 
+**Optional completion:** after the selected native tool's result and T-SQL schema/data comparisons, open a fresh approved Entra/TLS SQL-client connection to target `workshop`. Use this module's read-only verification queries to confirm actual server/database identity, thirty rows, join ten and sum55, then record [target client completion](../cutover/README.md#45a-use-the-migrated-result-through-a-fresh-client). Do not enable business writes, switch to SQL authentication or delete source. In the [real-source preparation task](../planning/README.md#48-prepare-to-replace-the-synthetic-source-with-a-real-source), identify target-specific SQL Agent/cross-DB features, tool/authentication support, backups and recovery criteria.
+
 ## 5. Verification and common failures
 
 On a feature mismatch reassess target rather than claiming data-only success preserves SQL Agent/cross-DB. Check SHIR/version/network/TLS/backup permissions independently. On Entra-only policy or unsupported DMS auth stop without bypass tags, authentication changes or subscription evasion. On B2 current-MI-user DROP errors inspect actual target state and approved isolated import context, never invent user-preservation flags or edit the BACPAC model. Handle readonly only on the new target. Inspect schema failures even if data proceeds; do not accept count-only comparisons or assume instance objects migrated.

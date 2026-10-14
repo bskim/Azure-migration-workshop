@@ -239,6 +239,8 @@ if ($Messages -notmatch "(?m)^AMW_OBJECT_VERIFY_PASS\s*$" -or $Messages -match "
 - [Prepare the private synthetic source](./verify/prepare-private.sh)
 - [Private data verification](./verify/verify-private.sh)
 
+**Optional completion:** after copy and complete file comparisons, read target `notes.txt` through a fresh request from the same private client. Record the account/container, new local path, SHA-256 and Content-Type criteria from [target client completion](../cutover/README.md#45a-use-the-migrated-result-through-a-fresh-client). Retain source/shared inputs and do not add an app or compute track. In the [real-source preparation task](../planning/README.md#48-prepare-to-replace-the-synthetic-source-with-a-real-source), identify S3 access, object properties, changes and switch prerequisites without connecting to AWS.
+
 ## 5. Verification and common failures
 
 Require the actual AzCopy job to finish with three completed transfers, zero failed/skipped and the expected source byte total, plus unfiltered names, download hashes and required content type/user metadata. A successful utility process alone is not content verification. On 403 inspect actual tenant/identity/data scopes, propagation, approved DNS/routes and account configuration using the [Blob 403 guide](https://learn.microsoft.com/en-us/troubleshoot/azure/azure-storage/blobs/authentication/storage-troubleshoot-403-errors). Preserve errors, stop on mismatches and obtain approval for corrections; do not relax network/key/TLS controls. S3 ETag, versions, index tags and access tier require their own chosen criteria.

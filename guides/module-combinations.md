@@ -22,6 +22,18 @@ Links to all selected modules and their minimum inputs are in the root selector.
 
 **Sample configuration:** the provided Blob examples use private endpoints/DNS, public network Disabled, Entra data authentication, Shared Key/anonymous access disabled, bypass None and no resource-instance exceptions. Use the selected lab's approved identity/network inputs and check applicable policies with the administrator. Keep the supplied configuration and TLS checks unchanged; an alternative needs its own supported scenario and approval. Authentication and network access are independent.
 
+### Choose shared completion exercises
+
+Attach only the exercises useful for the selected module. Do not add other deployment tracks or mandatory sample-app integration.
+
+| Exercise | When to select and minimum inputs | Output and planned time |
+|---|---|---|
+| [Target client completion](../modules/migration/cutover/README.md#45a-use-the-migrated-result-through-a-fresh-client) | After migration/data comparisons, reuse an approved read client and target. CSV assessment ends with prerequisite identification. | Correct destination/content through a fresh connection; 10–15 minutes plus waits |
+| [Error distinction](../modules/onboarding/observability/README.md#41a-distinguish-permission-network-and-application-errors) | Read one synthetic card; optionally observe 404/422 with an already-running local app. | Permission/connectivity/app hypotheses and next checks; 10–15 minutes |
+| [Real-source preparation](../modules/migration/planning/README.md#48-prepare-to-replace-the-synthetic-source-with-a-real-source) | Use one server/object/DB scenario, without real-source connections or customer materials. | Six preparation rows, owners and proceed/stop criteria; 10–15 minutes |
+
+These are planning estimates. Allocate part of the existing recap/observation time or extend the session; they are not automatically included in the one-day totals below. These exercises do not create resources or change roles/network configuration.
+
 ## 2. One-day onboarding example
 
 This is a planning hypothesis of 360 instructional minutes plus 120 minutes for lunch/breaks/environment response, not a measured learner duration or mandatory syllabus.

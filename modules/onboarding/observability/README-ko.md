@@ -71,6 +71,33 @@
 어떤 관찰이 제어 영역인지, 앱/데이터 영역인지, 비용인지 표시합니다. 이 카드의 결론을 실제 배포 검증 결과로 기록하지 않습니다.
 
 
+### 4.1a 권한·네트워크·앱 오류를 구분하는 연습
+
+**선택 시간:** 10~15분입니다. 다음 합성 카드 중 하나를 고르고 `관찰 사실 | 원인 후보 | 추가 확인 | 유지할 설정 | 정상 복귀 기준`을 작성합니다. 모든 환경에서 같은 오류 코드가 나온다고 가정하지 않습니다.
+
+| 합성 관찰 | 먼저 구분할 것 | 추가 확인 |
+|---|---|---|
+| 로그인과 리소스 조회는 성공하지만 Blob 읽기는 403입니다. | 데이터 역할·scope·인증 대상과 네트워크 제한을 함께 확인합니다. 403만으로 RBAC 문제를 확정하지 않습니다. | 승인된 관리자가 현재 identity·data role·scope를 확인하고, 승인된 private client의 DNS·경로·서비스 오류 상세를 대조합니다. |
+| private FQDN의 DNS 조회나 TCP 연결이 실패합니다. | 앱 응답 전에 발생한 연결 실패인지 확인합니다. | 실행 위치·DNS 응답·대상 포트·경로·listener를 확인합니다. 경로를 확인하기 전에 권한을 추가하지 않습니다. |
+| `/health`는 200이지만 존재하지 않는 URL은 404, 잘못된 입력은 422입니다. | 요청이 앱까지 도착했고 route나 입력 검사가 응답했는지 확인합니다. | 요청 경로·payload·앱 로그와 정상 요청 결과를 비교합니다. 리소스를 다시 배포하지 않습니다. |
+
+**선택 실제 관찰 — 이미 실행 중인 로컬 공통 앱만 사용합니다.** [로컬 앱 실행](../../../sample-app/README-ko.md)을 선택한 경우 같은 WSL/Linux Bash의 두 번째 터미널에서 실행합니다. 새 앱 실행이나 클라우드 배포를 필수로 하지 않으며 local endpoint가 없으면 카드로 마칩니다. 아래 주소를 cloud·customer endpoint로 변경하지 않습니다.
+
+```bash
+curl --fail-with-body --max-time 10 --noproxy "*" http://127.0.0.1:8080/health
+curl --fail-with-body --max-time 10 --noproxy "*" http://127.0.0.1:8080/items
+curl --include --max-time 10 --noproxy "*" http://127.0.0.1:8080/workshop-missing-route
+curl --include --max-time 10 --noproxy "*" \
+  --request POST http://127.0.0.1:8080/items \
+  --header 'Content-Type: application/json' --data '{"name":""}'
+curl --fail-with-body --max-time 10 --noproxy "*" http://127.0.0.1:8080/items
+curl --fail-with-body --max-time 10 --noproxy "*" http://127.0.0.1:8080/health
+```
+
+**기대 관찰:** health 200 → items 기준값 → 404 → 422 → 변경 없는 items → health 200입니다. 같은 앱의 외부 writer가 없는 상태에서 목록을 비교합니다. 오류 요청 두 개는 의도적으로 `--fail-with-body` 없이 HTTP status를 읽으며, curl exit 0은 HTTP 성공을 뜻하지 않습니다. 연결 실패·다른 status·목록 변경이 있으면 중단하고 해당 요청과 앱 로그를 확인합니다.
+
+권한·네트워크 카드는 토론이며 실제 역할 회수·NSG/DNS 변경·token 변조를 실행하지 않습니다. 앱 연습의 잘못된 입력도 저장되지 않습니다. 이 단계의 정리 대상은 개인 기록뿐이며 기존 앱·공유 입력의 종료와 삭제는 원 소유자가 관리합니다.
+
 ### 4.2 Portal — 대상·시간 범위부터 맞추기
 
 

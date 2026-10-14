@@ -144,6 +144,8 @@ Compare mysqldump/client logical backup and restore only on separately approved 
 - [Cutover](../cutover/README.md)
 - [Planning](../planning/README.md)
 
+**Optional completion:** after the DMS activity and schema/data comparisons, open a fresh approved SQL-client TLS connection to target FQDN and `workshop`, then rerun existing read-only verification queries. Record the actual destination, thirty rows, join ten and sum55 in [target client completion](../cutover/README.md#45a-use-the-migrated-result-through-a-fresh-client). Preserve source/backups, the original profile and writer settings. Use the [real-source preparation task](../planning/README.md#48-prepare-to-replace-the-synthetic-source-with-a-real-source) to identify engine/object compatibility, current offline/online support, permission, connectivity and recovery questions without changing binlog or server-wide settings.
+
 ## 5. Verification and common failures
 
 Check current source/target/version/region/tier experience instead of trusting a stale online URL (which may redirect to offline guidance). Separate management 403 from engine privilege/TLS/network failures. Check InnoDB/CHECK/SQL mode/DDL partial commits, target truncation risk and actual source-readonly scope. On native-complete/data-different inspect mapping, charset/FK, source changes and failed/skipped objects. Require task/table plus independent schema/data evidence.

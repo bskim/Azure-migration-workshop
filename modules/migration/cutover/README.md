@@ -57,6 +57,26 @@ Record final data/features/native state, then the owner decides with reason. Unk
 
 For PG/MySQL use schema/ten rows per table/thirty total/join ten/sum55 and ordered results. SQL uses its own dbo/T-SQL and needs separate Agent/cross-DB feature evidence. Objects require three root names, actual bytes/hash and selected content type/metadata. A server demo needs actual boot/service/representative features/read/config. Without source these remain discussion criteria. Native state, schema/data, client connection and observability are separate evidence.
 
+### 4.5a. Use the migrated result through a fresh client
+
+**Optional time:** 10–15 minutes plus connection waits. Reuse the completed migration module's source, target, comparisons and approved read client. Do not add an application server or another compute track.
+
+1. Check the preceding native operation and data comparisons. Preserve the source and original connection configuration.
+2. Record a credential-free target alias, database/container and check. Open a fresh connection or request using a separate TARGET profile.
+3. Choose only one workload below. Check both the actual destination and returned content.
+4. Record `selected workload | target alias | fresh connection method | expected result | observed result | next action`. On failure retain the original configuration and use the [error distinction exercise](../../onboarding/observability/README.md#41a-distinguish-permission-network-and-application-errors).
+
+| Selected workload | Reused client and check |
+|---|---|
+| PostgreSQL/MySQL | Reconnect the module's SQL client to the target FQDN and `workshop`. Read server/database identity and rerun its verification queries: ten rows per table, thirty total, join ten and sum55. |
+| SQL Server | Open a new approved Entra/TLS connection to target `workshop` and run its T-SQL verification. Do not substitute another engine's query or switch to SQL authentication. |
+| Blob | From the approved private client, confirm the target account/container and read `notes.txt` through a new request. Download to a new local path separate from source files and compare the preceding SHA-256 and Content-Type criteria. Do not add SAS issuance or public access. |
+| Real server test migration | Read the approved representative response and logs from the prepared isolated test target. With only a synthetic CSV assessment, identify the recommended target and required test inputs, then stop here. |
+
+**Completion:** explain the correct target, fresh connection and matching content. Failed preceding comparisons also stop the client switch. Do not enable business writes, change production DNS or delete the source.
+
+**Cleanup:** remove only the exact personal TARGET profile and download paths created here. Original modules own retention and deletion approval for shared source, target, identity and network inputs.
+
 ### 4.6. Separate failure before, after and unknown target writes
 
 Use tabletop by default. Any optional failed-read profile must be isolated (for example invalid.example.invalid), with no real credentials or modification of healthy profiles/production DNS. With verified no-new-business-write evidence and safe source/baseline/owner approval, a personal SOURCE read return may be appropriate; writer resume is separate. With target business writes, stop approved writers, preserve both sides, inspect differences and plan reconciliation/restore/RPO/approval before return. Unknown writes remain NO-GO, even if your own test was read-only. Do not run reverse copy/DELETE/recovery SQL from these cards.

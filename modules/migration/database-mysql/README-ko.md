@@ -221,6 +221,8 @@ python3 compare-native.py "$MYSQL_PROTECTED_DIRECTORY" "$AZURE_SUBSCRIPTION_ID" 
 dump/restore 완료는 DMS activity 성공이 아닙니다. 실제 cutover는 [계획](../planning/README-ko.md)의 쓰기 정지·최종 확인·승인·connection/DNS·관찰/rollback을 따릅니다. target 새 writes 뒤 source로 접속만 되돌리는 것은 data rollback이 아닙니다.
 
 
+**선택 마무리:** DMS activity와 schema/data 비교를 마친 뒤, 승인된 SQL client로 target FQDN·`workshop`에 새 TLS 연결을 만들고 기존 검증 query를 읽기 실행합니다. [target client 마무리](../cutover/README-ko.md#45a-이전-결과를-새-client에서-사용하는-마무리)에 실제 대상·총 30행·join 10행·sum 55를 기록합니다. source·backup·원래 profile과 기존 writer 설정은 유지합니다. [실제 source 준비 과제](../planning/README-ko.md#48-합성-source를-실제-source로-바꿀-때의-준비-과제)에서 엔진/객체 호환성·현재 offline/online 지원·권한·연결·복구 질문을 정리하며 binlog나 server 전체 설정은 변경하지 않습니다.
+
 ## 5. 대표 실패
 
 

@@ -71,6 +71,15 @@ host/deploymentstorageMI/role/private와 HTTPfunctionkey를 구분합니다. key
 
 VMprivateRunCommand/publicSSH와 AKSprivateMIclient/localuserpublic32는 각각의 접근 경로입니다. 선택한 경로의 DNS/auth/role/flag와 systempool2node·지원/quota/cost를 확인합니다. externalregistry/VNet/NAT/DNS에 추가한 정확한 grant를 추적하고 consumer는 shared 입력을 보존합니다.
 
+### 공통 마무리 연습 준비
+
+[모듈 조합의 공통 연습](./module-combinations-ko.md#공통-마무리-연습-선택)에서 회차에 필요한 항목만 선택합니다.
+
+- **target client:** 이전 모듈의 검증을 먼저 완료하고 source/profile을 보존합니다. 참가자에게 target alias·DB/container·읽기 client·기대값을 제공합니다. 새 앱·writer는 추가하지 않으며 CSV assessment는 실제 test target 없이 준비 과제로 마칩니다.
+- **오류 구분:** 권한/네트워크 카드는 합성 토론으로 준비합니다. 실제 역할·NSG·DNS를 바꾸지 않습니다. 로컬 앱 관찰을 선택하면 기존 WSL 앱의 8080 loopback과 로그를 확인하고 다른 writer를 사용하지 않습니다. 404/422와 curl transport exit를 별도로 읽도록 안내합니다.
+- **실제 source 준비:** 여섯 행의 개인 표에서 확인 방법·담당자·진행 조건을 설명하도록 합니다. 미확인 항목을 확인 담당자에게 연결하며 고객 정보·credential·실제 AWS 접속은 사용하지 않습니다.
+- **종료:** 개인 profile·다운로드 파일·기록만 정리합니다. 원래 앱과 source/target·backup·공유 identity/network는 원 소유자가 관리합니다. 각 연습의 10~15분은 준비·대기와 구분해 배정합니다.
+
 ## 7. 시간·근거 해석
 
 360+120분 일정과 module 시간은 회차 설계용 추정치입니다. 강사 setup·설명/질문·인증/권한·provision/job·검증·정리를 나누어 계획합니다. 실제 workload의 data 크기·리전·준비 조건에 따라 시간을 조정합니다.

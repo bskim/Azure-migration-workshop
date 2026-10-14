@@ -302,6 +302,8 @@ if ($Messages -notmatch "(?m)^AMW_OBJECT_VERIFY_PASS\s*$" -or $Messages -match "
 같은 job/data를 다시 읽기 검증할 때만 parameters에 `phase=verify-existing-job`을 추가합니다. copy를 다시 실행하지 않고 원래 job 기록과 새 비교 다운로드를 검사합니다. AzCopy 10.32.8의 JSON은 `JobStatus`와 숫자 문자열 metric을 사용합니다. `FinalJobStatus`나 숫자 JSON type을 가정하지 않으며 지원하지 않는 shape는 실패로 표시합니다. 이 옵션은 native job resume/cancel이나 자동 복구 플랫폼이 아닙니다.
 
 
+**선택 마무리:** 복사와 전체 파일 비교를 마친 뒤, 같은 private client에서 target `notes.txt`를 새 요청으로 읽습니다. [target client 마무리](../cutover/README-ko.md#45a-이전-결과를-새-client에서-사용하는-마무리)의 account/container·새 로컬 경로·SHA-256·Content-Type 기준을 기록합니다. source와 공유 입력은 보존하며 앱·다른 compute는 추가하지 않습니다. [실제 source 준비 과제](../planning/README-ko.md#48-합성-source를-실제-source로-바꿀-때의-준비-과제)에서는 S3 접근·객체 속성·변경분·전환 준비 질문을 작성하고 AWS에는 접속하지 않습니다.
+
 ## 5. 검증·대표 실패
 
 AzCopy 실제 job의 completed3·failed/skipped0·원본 byte 합계와 필터 없는3개 이름·download hash·content type/사용자 metadata를 함께 확인합니다. process 성공만으로 내용 검증을 대신하지 않습니다. 403은 [Blob403 안내](https://learn.microsoft.com/en-us/troubleshoot/azure/azure-storage/blobs/authentication/storage-troubleshoot-403-errors)와 실제 tenant/identity/data scope·전파·승인 DNS/route·계정 설정을 읽고 오류를 보존해 중단합니다. 수정 승인을 받고 network/key/TLS를 낮추지 않습니다. S3 ETag/version/index tag/tier는 선택 기준을 별도로 검토합니다.

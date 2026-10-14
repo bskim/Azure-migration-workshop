@@ -33,6 +33,33 @@ Choose only the mode that matches your objective and available inputs. Read the 
 
 Card A: provisioning Succeeded and app health/write/read-back succeed, but Cost analysis has No data. App evidence is useful; cost is not settled or free. Card B: Activity Log creation succeeded, but system logs show image-pull failure and app access fails. Management success is not runtime success. Card C: VM deallocated, disks/public IP/registry remain. Compute stop is not complete cleanup. Label each evidence type; these cards are not actual Azure output.
 
+### 4.1a. Distinguish permission, network and application errors
+
+**Optional time:** 10–15 minutes. Choose one synthetic card and write `observed facts | possible cause | next check | configuration to retain | recovery criterion`. Error codes can differ between environments.
+
+| Synthetic observation | Initial distinction | Next check |
+|---|---|---|
+| Login and resource reads work, but a Blob read returns 403. | Check data-role scope and authentication target alongside network restrictions. A 403 alone does not identify an RBAC failure. | An approved administrator checks the current identity, data role and scope; compare private-client DNS/routing and detailed service errors. |
+| DNS lookup or TCP connection to a private FQDN fails. | Determine whether failure occurs before an application response. | Check execution location, DNS answer, destination port, route and listener. Do not grant permissions before checking reachability. |
+| `/health` returns 200, a missing URL returns 404, and invalid input returns 422. | Determine whether the request reached the app and route/input validation responded. | Compare path, payload, application logs and a valid request. Do not redeploy the resource. |
+
+**Optional live observation — only the already-running local sample app.** If you selected [local app execution](../../../sample-app/README.md), use a second terminal in the same WSL/Linux Bash environment. Starting another app or deploying to Azure is not required; without this local endpoint, finish with a card. Do not replace these addresses with cloud or customer endpoints.
+
+```bash
+curl --fail-with-body --max-time 10 --noproxy "*" http://127.0.0.1:8080/health
+curl --fail-with-body --max-time 10 --noproxy "*" http://127.0.0.1:8080/items
+curl --include --max-time 10 --noproxy "*" http://127.0.0.1:8080/workshop-missing-route
+curl --include --max-time 10 --noproxy "*" \
+  --request POST http://127.0.0.1:8080/items \
+  --header 'Content-Type: application/json' --data '{"name":""}'
+curl --fail-with-body --max-time 10 --noproxy "*" http://127.0.0.1:8080/items
+curl --fail-with-body --max-time 10 --noproxy "*" http://127.0.0.1:8080/health
+```
+
+**Expected observation:** health200 → items baseline → 404 → 422 → unchanged items → health200. Compare lists without external writers on the same app. The two error requests intentionally omit `--fail-with-body` to inspect HTTP status; curl exit0 is not an HTTP-success criterion. Stop for connection errors, unexpected status or changed items and inspect that request and application logs.
+
+Permission/network cards are discussion exercises, not role revocation, NSG/DNS changes or token manipulation. The invalid application input is not stored. Cleanup covers personal notes only; the original owner controls existing app shutdown and shared-input deletion.
+
 ### 4.2. Align target and observation time in the Portal
 
 Check directory/subscription, open the chosen resource Overview and read name/group/region/current state. Match the actual exercise period and distinguish UTC/local time. Record resource owner and observation unit (VM, Pod, revision, replica). Running/Succeeded alone is not app or migration acceptance.

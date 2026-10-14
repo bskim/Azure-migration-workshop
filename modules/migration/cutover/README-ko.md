@@ -122,6 +122,26 @@ A는 owner에게 요청할 실제 evidence만 토론합니다. B는 외부 write
 값은 각 자료의 **기대 기준**이며 실제 실행 결과와 구분합니다. native/schema·app/data·연결·관측을 구분합니다. B의 읽기 전환에서 기본 앱은 memory API이므로 실제 DB migration/app adapter가 확인됐다고 하지 않습니다.
 
 
+### 4.5a 이전 결과를 새 client에서 사용하는 마무리
+
+**선택 시간:** 10~15분과 연결 대기 시간입니다. 완료한 이전 모듈의 source·target·검증 결과와 승인된 읽기 client를 재사용합니다. 앱 서버나 다른 컴퓨트 트랙을 추가하지 않습니다.
+
+1. 앞선 모듈의 native 작업과 데이터 비교 결과를 확인합니다. source와 원래 접속 설정을 보존합니다.
+2. credential을 제외한 target alias·DB/container·검사 항목을 기록합니다. 별도 TARGET profile로 새 연결이나 요청을 만듭니다.
+3. 다음 표에서 선택한 workload 하나만 확인합니다. 연결 대상과 반환 내용을 함께 비교합니다.
+4. 결과를 `선택 workload | target alias | 새 연결 방식 | 기대값 | 실제 결과 | 다음 조치`로 기록합니다. 실패하면 원래 설정을 유지하고 [오류 구분 연습](../../onboarding/observability/README-ko.md#41a-권한네트워크앱-오류를-구분하는-연습)으로 원인을 분류합니다.
+
+| 선택 workload | 재사용할 client와 확인 방법 |
+|---|---|
+| PostgreSQL/MySQL | 해당 모듈의 SQL client를 target FQDN·`workshop`에 새로 연결하고, server/DB 정보와 기존 검증 query를 읽기 실행합니다. 각 table 10행·총 30행·join 10행·sum 55를 비교합니다. |
+| SQL Server | 승인된 Entra/TLS 연결로 target `workshop`에 새로 접속하고 해당 모듈의 T-SQL 검증을 실행합니다. 다른 엔진의 query나 SQL 인증으로 바꾸지 않습니다. |
+| Blob | 승인된 private client에서 target account/container를 확인하고 `notes.txt`를 새 요청으로 읽습니다. source와 다른 새 로컬 파일 경로에 저장하고 앞선 SHA-256·Content-Type 기준과 비교합니다. SAS 발급이나 public 접근을 추가하지 않습니다. |
+| 실제 서버 test migration | 준비된 격리 test target의 승인된 대표 읽기 요청과 로그를 확인합니다. 합성 CSV assessment만 선택한 경우에는 권장 target·필요한 test 입력을 정리하고 여기서 마칩니다. |
+
+**완료 기준:** 올바른 target의 새 연결과 내용 일치를 설명합니다. 기존 모듈의 비교 결과가 틀리면 client 전환도 중단합니다. business write·운영 DNS 변경·source 삭제는 수행하지 않습니다.
+
+**정리:** 이 단계에서 만든 개인 TARGET profile과 다운로드 파일만 정확한 경로로 정리합니다. 공유 source·target·identity·network는 원 소유 모듈이 보존·삭제 승인을 관리합니다.
+
 ### 4.6 실패 카드 — 새 쓰기 전/후/unknown을 나누기
 
 

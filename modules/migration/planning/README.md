@@ -102,6 +102,27 @@ Record scenario/evidence level; target/tool/rationale/rejected alternative; read
 - [Cutover](../cutover/README.md)
 - [Observability](../../onboarding/observability/README.md)
 
+### 4.8. Prepare to replace the synthetic source with a real source
+
+**Optional time:** 10–15 minutes. Complete this table in personal notes for one selected server, object or database scenario. Do not query a real source, create AWS resources or obtain credentials. Use synthetic aliases rather than customer inventories or internal documents.
+
+| Topic | This exercise's inputs and results | Additional real-source questions | Check method, owner and proceed condition |
+|---|---|---|---|
+| Tool support | Source/target, tool and offline/online mode | OS/engine/version, required features and current support | Identify engine-specific official support guidance and the assessment owner. |
+| Connectivity | Client/service/agent location, DNS, TLS and ports | Source → execution actor → target route, bandwidth and egress | The network owner defines an approved route and bounded test. |
+| Authentication/permissions | Management roles, data roles and engine privileges | Supported authentication, minimum scopes and grant/revocation owner | Record permissions and approvers, never secret values. |
+| Data/features | Small schema/files and content/property comparisons | Size, change rate, consistency, retained properties and extension/object compatibility | The data owner defines comparisons and synthetic test inputs. |
+| Switch | A personal client's fresh read connection | Writers, final synchronization, DNS/cache/pools and allowed interruption | The app owner defines write control, GO/NO-GO criteria and switch order. |
+| Recovery/cleanup | Source retention and personal-file removal | Backup/restore tests, RTO/RPO, recovery after target writes and retention | Separate recovery responsibility from deletion approval. |
+
+1. For each row record known facts and at least one additional question. Unresolved items require an owner/check method and defer execution.
+2. Distinguish managed copy/replication/CDC from compatibility, data and client checks performed by participants. Do not implement another managed migration engine.
+3. Once prepared, adapt the [target client completion](../cutover/README.md#45a-use-the-migrated-result-through-a-fresh-client) to the real workload's fresh connections and reads. Operational execution requires separate approval.
+
+**Submission:** explain all six rows for one workload, check methods, owners, proceed/stop criteria and recovery before/after target writes. A completed managed copy does not complete every preparation item. With Mover, write only service-adoption prerequisites; the separate workshop execution path is AzCopy.
+
+This task creates personal notes only; it does not change resources, roles or source configuration.
+
 ## 5. Verification and common failures
 
 Complete when you can justify the target/tool, reject an alternative, retain unknowns, choose an honest source-appropriate mode and define tests/GO/rollback/cost/cleanup. Common errors: target by product-name similarity, unknown→none, rewriting managed replication/CDC in code, online→zero downtime and target-write connection reversal→data rollback. Seek missing evidence and current support, not optimistic defaults.

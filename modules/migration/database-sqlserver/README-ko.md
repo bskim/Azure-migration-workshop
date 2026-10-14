@@ -268,6 +268,8 @@ SQL Database B에는 해당 DMS online 지원을 보장하지 않습니다. MI/S
 로그인·user mapping·job·operator·instance 설정은 각 경로의 지원/수동 작업을 구분하고 migration 완료에 자동 포함됐다고 하지 않습니다.
 
 
+**선택 마무리:** 선택한 native 도구의 결과와 T-SQL schema/data 비교를 마친 뒤, 승인된 Entra/TLS SQL client로 target `workshop`에 새 연결을 만듭니다. 해당 모듈의 읽기 검증 query로 실제 server/DB·총 30행·join 10행·sum 55를 확인하고 [target client 마무리](../cutover/README-ko.md#45a-이전-결과를-새-client에서-사용하는-마무리)에 기록합니다. 새 business write·SQL 인증 전환·source 삭제는 수행하지 않습니다. [실제 source 준비 과제](../planning/README-ko.md#48-합성-source를-실제-source로-바꿀-때의-준비-과제)에서 대상별 SQL Agent/cross-DB 기능·도구/인증 지원·backup·복구 조건을 정리합니다.
+
 ## 5. 대표 실패
 
 

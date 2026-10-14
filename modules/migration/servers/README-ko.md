@@ -240,6 +240,8 @@ AWS 공식 문헌은 별도 replication appliance의 현재 OS/하드웨어 조�
 Online·동기화·최종 migration 선택은 무중단 보장이 아닙니다. 서비스의 migration 완료와 운영 cutover 수용을 구분합니다.
 
 
+**선택 마무리:** CSV assessment 경로에서는 권장 target·source 보존 요구와 실제 test migration에 필요한 입력을 [실제 source 준비 과제](../planning/README-ko.md#48-합성-source를-실제-source로-바꿀-때의-준비-과제)에 정리합니다. CSV로 실제 서버를 복제하거나 target를 새로 만들지 않습니다. 별도로 준비된 실제 test target이 있는 경우에만 [target client 마무리](../cutover/README-ko.md#45a-이전-결과를-새-client에서-사용하는-마무리)의 격리 endpoint·대표 읽기·로그를 관찰합니다. 앱/OS 동작 확인과 assessment 권장 결과를 구분하며 source·복제·backup 정리는 기존 owner가 관리합니다.
+
 ## 5. 성공 기준·대표 실패
 
 

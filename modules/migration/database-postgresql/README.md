@@ -128,6 +128,8 @@ Read pg_dump/pg_restore as logical-backup alternatives with client-version, role
 - [Cutover](../cutover/README.md)
 - [Planning](../planning/README.md)
 
+**Optional completion:** after the native operation and schema/data comparisons, open a fresh approved SQL-client connection to target FQDN and `workshop`, then rerun the existing read-only verification queries. Record the actual destination, thirty rows, join ten, sum55 and observations in [target client completion](../cutover/README.md#45a-use-the-migrated-result-through-a-fresh-client). Preserve source/backups and the original profile. No app adapter is required. Use the [real-source preparation task](../planning/README.md#48-prepare-to-replace-the-synthetic-source-with-a-real-source) to identify engine/extension, permission, connectivity, change-capture and recovery questions.
+
 ## 5. Verification and common failures
 
 Check actual service reachability/DNS/TLS/5432/runtime and DB authentication separately from Azure management rights. Inspect support/extensions/parameters/roles on validation errors and actual mapping/source changes/constraints/warnings on data differences. Avoid broad public access, TLS disablement and automatic reseeding. Require native status plus small full schema/data results; other source/version/topology, online behavior and application compatibility need distinct assessment.

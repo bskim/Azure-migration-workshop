@@ -71,6 +71,15 @@ Cloud host/deployment storage MI/roles/private network differs from function-lev
 
 VM private Run Command and public SSH/tunnel are separate access branches. AKS private MI client and local user/public /32 have different DNS/auth/rights; do not combine flags blindly. Preserve the documented two-node system pool and approved quota/cost. Track every new grant on external registry/VNet/NAT/DNS scopes and never delete the supplied shared inputs during consumer cleanup.
 
+### Prepare shared completion exercises
+
+Choose only the relevant items from [shared exercises in module combinations](./module-combinations.md#choose-shared-completion-exercises).
+
+- **Target client:** complete the original module's verification first and retain source/profile inputs. Provide target alias, database/container, read client and expected results. Do not add an app or writer; CSV assessment ends with preparation questions unless a real test target is separately available.
+- **Error distinction:** prepare permission/network cards as synthetic discussion, without changing roles, NSGs or DNS. For optional local observation, check the existing WSL app's loopback8080 and logs and avoid other writers. Teach HTTP404/422 separately from curl transport exit codes.
+- **Real-source preparation:** ask participants to explain check methods, owners and proceed conditions in all six rows. Route unresolved items to their owners without using customer information, credentials or real AWS connections.
+- **Finish:** clean up only personal profiles, downloads and notes. Original owners retain control of app shutdown and source/target, backup, shared identity/network cleanup. Allocate each 10–15 minute exercise separately from preparation/waits.
+
 ## 7. Timing and evidence discipline
 
 The 360+120 minute days and module durations are hypotheses, not measured human learning clocks. Separately measure instructor setup, explanation/questions, sign-in/access, provisioning/jobs, verification and cleanup. Small rows/files and one region cannot predict production scale.

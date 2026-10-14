@@ -158,6 +158,8 @@ Use go/no-go, backups, source write stop, final sync and responsible owner from 
 - [Cutover](../cutover/README.md)
 - [Planning](../planning/README.md)
 
+**Optional completion:** for CSV assessment, record the recommended target, source-preservation requirements and real test-migration inputs in the [real-source preparation task](../planning/README.md#48-prepare-to-replace-the-synthetic-source-with-a-real-source). Do not replicate a server from CSV or create a target here. Only with a separately prepared real test target, use [target client completion](../cutover/README.md#45a-use-the-migrated-result-through-a-fresh-client) to observe the isolated endpoint, representative read and logs. Distinguish actual app/OS behavior from assessment recommendations; existing owners control source, replication and backup cleanup.
+
 ## 5. Verification and common failures
 
 For A, explain imported versus discovered versus replicated/tested evidence. For B, inspect current template, unique inventory item, warnings/unknowns/as-is assumptions. For C, investigate appliance/Mobility/source/network/OS support, service health/lag and actual boot/app/data failures. Do not turn unsupported OS names or missing evidence into Ready. Check leftover disks/storage/appliance/test resources after cleanup.
