@@ -108,7 +108,7 @@ Keep the budget demonstration as a form preview unless creation is separately ap
 
 Explain goal/mode/inputs/cost/owners/stop boundaries first. Read the official service purpose/support. Execute approved steps one at a time, compare expected/actual evidence, and explain long waits rather than auto-upgrading SKU/rights. On failure inspect native error/source conditions, stop and obtain correction approval. End with native plus data/app/feature evidence and owner cleanup/retention.
 
-Without AWS source use a guided flow/synthetic case/prepared result, never fabricated discovery/replication/S3/RDS output. Storage Mover always remains introduction-only in this workshop. Without a supported DB runtime/source, use the appropriate walkthrough/demo; AzCopy/dump is not native service proof. If the timebox ends, reserve later observation or use an explicitly prepared demonstration for a selected execution module. Cards A–D distinguish assumed readiness, verified pre-write personal return, post-write recovery and unknown/NO-GO.
+Without AWS source use a guided flow/synthetic case/prepared result, never fabricated discovery/replication/S3/RDS output. Storage Mover always remains introduction-only in this workshop. Without a supported DB runtime/source, use the appropriate walkthrough/demo; Compare utility output separately from native service results. If the timebox ends, reserve later observation or use an explicitly prepared demonstration for a selected execution module. Cards A–D distinguish assumed readiness, verified pre-write personal return, post-write recovery and unknown/NO-GO.
 
 ## 9. Cleanup responsibility and session outcome
 
@@ -144,7 +144,7 @@ UV_PROJECT_ENVIRONMENT=.venv-wsl uv run --frozen --no-sync pytest -q -s \
 
 Run local adapter/host checks only in WSL Bash in a repository `lab-output/functions-<id>` stage containing the shared source/adapter/host, approved Python 3.12 dependencies and stage venv. Install pytest/httpx only in this validation environment, not cloud runtime requirements. Host tests need a fresh single-worker localhost:7071 host and Azurite; inspect state before repeating and stop only your own host/emulator.
 
-Run the final cloud command from `sample-app`, reusing its existing pytest tooling without requiring learners to take/run that app course. Use only an explicitly approved fresh HTTPS/max-one-instance Function App, protected function-level key file and synthetic-write authorization. Never target customer or mutated shared endpoints. Expect no-key/wrong-key 401, health 200, POST 201/read-back, invalid 422 without mutation and 404; this does not prove durable scale-out state or other triggers.
+Run the final cloud command from `sample-app`, reusing its existing pytest tooling without requiring learners to take/run that app course. Use only an explicitly approved fresh HTTPS/max-one-instance Function App, protected function-level key file and synthetic-write authorization. Never target customer or mutated shared endpoints. Expect no-key/wrong-key 401, health 200, POST 201/read-back, invalid 422 without mutation and 404; durable scale-out state and other triggers need their own tests.
 
 ```bash
 uv pip install --python .venv pytest

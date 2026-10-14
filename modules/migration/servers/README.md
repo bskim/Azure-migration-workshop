@@ -176,7 +176,7 @@ Inspect exact project/group/lab ID and all associated resources, confirm no othe
 
 ### C: instructor-owned replication demo
 
-Test cleanup, Complete migration/stop replication, project deletion and actual target deletion are different actions. Inspect each native action's effect and preserve source/backup/rollback inputs. Account for VM/disk/NIC, replication storage/state, appliance and final target separately. Preserve external source/network and other tracks; project absence alone does not prove all resources or charges ended.
+Test cleanup, Complete migration/stop replication, project deletion and actual target deletion are different actions. Inspect each native action's effect and preserve source/backup/rollback inputs. Account for VM/disk/NIC, replication storage/state, appliance and final target separately. Preserve external source/network and other tracks; After project removal, inspect the remaining resources and delayed billing.
 
 ## 7. Additional considerations for a real migration
 

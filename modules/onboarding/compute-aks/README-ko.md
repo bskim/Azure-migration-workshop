@@ -10,9 +10,9 @@
 | manifest 읽기 | 포함된 YAML과 공통 앱 계약 | Deployment·Service·probe의 연결 설명 | Azure 로그인·registry·클러스터 생성 전부 |
 | 선택 Azure 실습 | 동일 앱 이미지·registry ID와 Azure 권한 | 앱 HTTP 계약·Pod 로그·선택 리소스 정리 | VM·Container Apps·Functions·Terraform·DB·Blob |
 
-이미지가 없으면 [공통 이미지 준비](../../../shared/container-image/README-ko.md)의 **4.1~4.2만** 사용한다. Container Apps용 user-assigned pull identity는 필요 없다. 이미 승인된 이미지·registry가 있으면 준비를 생략한다. **다른 컴퓨트 트랙을 완료하지 않는다.**
+이미지가 없으면 [공통 이미지 준비](../../../shared/container-image/README-ko.md)의 **4.1~4.2만** 사용합니다. Container Apps용 user-assigned pull identity는 필요 없습니다. 이미 승인된 이미지·registry가 있으면 준비를 생략합니다. **다른 컴퓨트 트랙을 완료하지 않습니다.**
 
-EKS의 클러스터·데이터·트래픽을 실제 이전하는 실습은 아니다. 같은 앱을 새 AKS에 재배포하면서 공통 Kubernetes 모델과 Azure identity 차이를 비교한다.
+EKS의 클러스터·데이터·트래픽을 실제 이전하는 실습은 아닙니다. 같은 앱을 새 AKS에 재배포하면서 공통 Kubernetes 모델과 Azure identity 차이를 비교합니다.
 
 
 ## 2. 서비스 소개와 AWS 비교
@@ -39,24 +39,24 @@ EKS의 클러스터·데이터·트래픽을 실제 이전하는 실습은 아�
 ### 교육용 클러스터 선택
 
 
-AKS Automatic은 일반적인 production-ready 기본 후보다. 이 실습은 **node 수·SKU·manifest를 직접 읽고 고정하는 학습**을 위해 AKS Standard(`sku base`)와 Free tier를 선택한다. Free는 control plane SLA가 없다는 뜻이지 VM·디스크·네트워크가 무료라는 뜻이 아니다.
+AKS Automatic은 일반적인 production-ready 기본 후보입니다. 이 실습은 **node 수·SKU·manifest를 직접 읽고 고정하는 학습**을 위해 AKS Standard(`sku base`)와 Free tier를 선택합니다. Free는 control plane SLA가 없다는 뜻이지 VM·디스크·네트워크가 무료라는 뜻이 아닙니다.
 
-공식 system pool 조건은 **최소 2개 노드, 노드당 최소 4 vCPU·4 GB 메모리**다. `Standard_D4s_v5` 2개를 예제로 사용하며 1-node/B-series 예제로 비용을 낮춰 적지 않는다. 전용 user pool·3-zone HA·GPU·유료 관측성은 제외한다. 앱을 system pool에 함께 두는 것은 교육용 단순화이며 production 분리 설계가 아니다.
+공식 system pool 조건은 **최소 2개 노드, 노드당 최소 4 vCPU·4 GB 메모리**입니다. `Standard_D4s_v5` 2개를 예제로 사용하며 1-node/B-series 예제로 비용을 낮춰 적지 않습니다. 전용 user pool·3-zone HA·GPU·유료 관측성은 제외합니다. 앱을 system pool에 함께 두는 것은 교육용 단순화이며 production 분리 설계가 아닙니다.
 
 
 ## 3. 사전 준비·권한·비용
 
 
-- **명령 환경:** 로컬 PowerShell 7.4 이상 + Azure CLI + `kubectl` + `kubelogin`, 저장소 루트. WSL Bash 명령으로 복사하지 않는다.
-- `kubectl`은 선택한 Kubernetes 버전과 지원되는 version skew를 맞춘다. [AKS client 설치](https://learn.microsoft.com/en-us/cli/azure/aks#az-aks-install-cli)를 참고해 `az aks install-cli`의 버전·설치 위치를 확인하고 준비한다. 기존 도구·kubeconfig를 임의로 덮어쓰지 않는다.
-- 강사는 `Microsoft.ContainerService`·`Microsoft.Network`·`Microsoft.Compute`·`Microsoft.ManagedIdentity` 등록, 리전의 supported Kubernetes patch, VM SKU 가용성·quota를 확인한다. 기본 VM 8 vCPU 외에 upgrade surge 여유도 고려한다.
-- 새 실습 그룹·AKS 생성/조회/삭제, cluster user credential 조회 권한이 필요하다.
-- 승인된 관리자는 새 cluster scope의 `Azure Kubernetes Service RBAC Cluster Admin`을 참가자에게 부여한다. namespace 생성·node 조회까지 배우기 위한 **실습 전용 클러스터 범위의 단순화**다. 구독 전체 Owner를 참가자 기본 권한으로 주지 않는다.
-- kubelet에 registry scope `AcrPull`도 별도 부여한다. role assignment 권한은 일반 리소스 Contributor와 다르다. 이 모듈은 RBAC mode ACR만 다룬다. ABAC registry에 `AcrPull`을 그대로 적용하지 않는다.
-- Entra 인증과 Azure RBAC를 사용하고 local account는 끈다. kubeconfig는 이 실습의 Git 제외 폴더에만 저장한다.
-- 비용: **D4s_v5 노드 2개·managed OS disk·AKS outbound load balancer/public IP**. 앱 Service는 ClusterIP라 외부 앱용 LoadBalancer를 추가하지 않는다. [가격 계산기](https://azure.microsoft.com/en-us/pricing/calculator/)에서 승인한다.
-- 최소 구성도 부담되면 manifest 읽기만 하거나 강사 데모로 진행한다. 임의로 구독·리전·쿼터를 변경하거나 미지원 1-node 구성으로 줄이지 않는다.
-- 이 모듈의 새 그룹과 AKS가 만든 node 그룹만 소유한다. **기존 registry·이미지·다른 컴퓨트는 정리하지 않는다.**
+- **명령 환경:** 로컬 PowerShell 7.4 이상 + Azure CLI + `kubectl` + `kubelogin`, 저장소 루트. WSL Bash 명령으로 복사하지 않습니다.
+- `kubectl`은 선택한 Kubernetes 버전과 지원되는 version skew를 맞춥니다. [AKS client 설치](https://learn.microsoft.com/en-us/cli/azure/aks#az-aks-install-cli)를 참고해 `az aks install-cli`의 버전·설치 위치를 확인하고 준비합니다. 기존 도구·kubeconfig를 임의로 덮어쓰지 않습니다.
+- 강사는 `Microsoft.ContainerService`·`Microsoft.Network`·`Microsoft.Compute`·`Microsoft.ManagedIdentity` 등록, 리전의 supported Kubernetes patch, VM SKU 가용성·quota를 확인합니다. 기본 VM 8 vCPU 외에 upgrade surge 여유도 고려합니다.
+- 새 실습 그룹·AKS 생성/조회/삭제, cluster user credential 조회 권한이 필요합니다.
+- 승인된 관리자는 새 cluster scope의 `Azure Kubernetes Service RBAC Cluster Admin`을 참가자에게 부여합니다. namespace 생성·node 조회까지 배우기 위한 **실습 전용 클러스터 범위의 단순화**입니다. 구독 전체 Owner를 참가자 기본 권한으로 주지 않습니다.
+- kubelet에 registry scope `AcrPull`도 별도 부여합니다. role assignment 권한은 일반 리소스 Contributor와 다릅니다. 이 모듈은 RBAC mode ACR만 다룹니다. ABAC registry에 `AcrPull`을 그대로 적용하지 않습니다.
+- Entra 인증과 Azure RBAC를 사용하고 local account는 끕니다. kubeconfig는 이 실습의 Git 제외 폴더에만 저장합니다.
+- 비용: **D4s_v5 노드 2개·managed OS disk·AKS outbound load balancer/public IP**. 앱 Service는 ClusterIP라 외부 앱용 LoadBalancer를 추가하지 않습니다. [가격 계산기](https://azure.microsoft.com/en-us/pricing/calculator/)에서 승인합니다.
+- 최소 구성도 부담되면 manifest 읽기만 하거나 강사 데모로 진행합니다. 임의로 구독·리전·쿼터를 변경하거나 미지원 1-node 구성으로 줄이지 않습니다.
+- 이 모듈의 새 그룹과 AKS가 만든 node 그룹만 소유합니다. **기존 registry·이미지·다른 컴퓨트는 정리하지 않습니다.**
 
 
 ## 4. 단계별 실습 — 필요한 범위만 선택
@@ -65,7 +65,7 @@ AKS Automatic은 일반적인 production-ready 기본 후보다. 이 실습은 *
 ### 4.1 클라우드 없이 manifest 읽기
 
 
-[app.yaml](./lab/app.yaml)을 열고 다음을 찾는다.
+[app.yaml](./lab/app.yaml)을 열고 다음을 찾습니다.
 
 ```text
 Deployment: 1 replica → Pod: image + HTTP 8080 + /health probes
@@ -73,13 +73,13 @@ Service: ClusterIP 8080 → app=workshop label을 가진 Pod의 http port
 kubectl port-forward → 로컬 127.0.0.1:8080
 ```
 
-- Deployment의 selector·Pod label·Service selector가 일치하는가?
-- readiness probe는 요청을 받을 준비, liveness probe는 재시작 판단이라는 차이를 설명할 수 있는가?
-- 요청 CPU 100m·메모리 128Mi와 제한 250m·256Mi를 구분할 수 있는가?
-- 동일한 [공통 앱](../../../sample-app/README-ko.md)의 메모리 데이터 때문에 1 replica·`Recreate`를 쓴다. 재배포 중 끊김이 있고 데이터가 초기화되므로 HA·무중단 설계라고 설명하지 않는다.
-- 토큰을 mount하지 않는 이유는 이 앱이 Kubernetes API를 호출하지 않기 때문이다. Workload ID를 활성화해도 이 Pod에 Azure 데이터 권한을 자동 부여하지 않는다.
+- Deployment의 selector·Pod label·Service selector가 일치하는지 확인합니다.
+- readiness probe의 요청 준비 확인과 liveness probe의 재시작 판단을 구분합니다.
+- 요청 CPU 100m·메모리 128Mi와 제한 250m·256Mi를 구분합니다.
+- 동일한 [공통 앱](../../../sample-app/README-ko.md)의 메모리 데이터 때문에 1 replica·`Recreate`를 씁니다. 재배포 중 끊김이 있고 데이터가 초기화되므로 HA·무중단 설계라고 설명하지 않습니다.
+- 토큰을 mount하지 않는 이유는 이 앱이 Kubernetes API를 호출하지 않기 때문입니다. Workload ID를 활성화해도 이 Pod에 Azure 데이터 권한을 자동 부여하지 않습니다.
 
-분석만 선택했다면 여기서 완료한다. `<namespace>`·`<container-image>`가 있는 template을 그대로 배포하지 않는다.
+분석만 선택했다면 여기서 완료합니다. `<namespace>`·`<container-image>`가 있는 template을 그대로 배포하지 않습니다.
 
 
 ### 4.2 선택 Azure 실습의 대상·입력 확인
@@ -132,7 +132,7 @@ $ManifestPath = Join-Path $LabDirectory "app.yaml"
 [pscustomobject]@{ Subscription = $SubscriptionId; Region = $Location; Group = $ResourceGroupName; Nodes = $NodeGroupName; Cluster = $ClusterName; AdminCidr = $ApiServerCidr; Image = $ContainerImage } | Format-List
 ```
 
-승인된 테넌트·`Enabled` 상태, Kubernetes patch, 관리 단말의 public egress IP, quota·비용을 확인한다. SSH는 이 실습의 접속 방법이 아니며 클러스터 생성에 필요한 공개키만 입력한다. 개인키를 복사·생성하지 않는다. API는 이 `/32`에서 접근한다. VPN/출구 IP가 바뀌면 승인된 설정을 다시 확인하며 `0.0.0.0/0`으로 넓히지 않는다.
+승인된 테넌트·`Enabled` 상태, Kubernetes patch, 관리 단말의 public egress IP, quota·비용을 확인합니다. SSH는 이 실습의 접속 방법이 아니며 클러스터 생성에 필요한 공개키만 입력합니다. 개인키를 복사·생성하지 않습니다. API는 이 `/32`에서 접근합니다. VPN/출구 IP가 바뀌면 승인된 설정을 다시 확인하며 `0.0.0.0/0`으로 넓히지 않습니다.
 
 
 ### 4.3 승인 후 새 클러스터 생성
@@ -159,15 +159,15 @@ if (-not $ClusterId -or -not $KubeletObjectId -or -not $ParticipantObjectId) { t
 [pscustomobject]@{ ClusterScope = $ClusterId; RegistryScope = $RegistryId; Kubelet = $KubeletObjectId; Participant = $ParticipantObjectId } | Format-List
 ```
 
-**관찰:** 새 AKS와 node 그룹, system pool 2개 노드다. 앱 Pod는 아직 없다. 주소 범위는 서로 겹치지 않는 교육용 예제이며 기존 VNet·온프레미스에 연결하지 않는다. 실제 환경은 IP 충돌·라우팅 요구를 먼저 검토한다.
+**관찰:** 새 AKS와 node 그룹, system pool 2개 노드입니다. 앱 Pod는 아직 없습니다. 주소 범위는 서로 겹치지 않는 교육용 예제이며 기존 VNet·온프레미스에 연결하지 않습니다. 실제 환경은 IP 충돌·라우팅 요구를 먼저 검토합니다.
 
-**권한 구분:** cluster control plane identity, 이미지를 받는 kubelet identity, 앱 Workload ID는 별도다. Entra Workload ID를 켰지만 이 합성 앱은 Azure SDK를 사용하지 않아 Pod federation·데이터 역할을 추가하지 않는다.
+**권한 구분:** cluster control plane identity, 이미지를 받는 kubelet identity, 앱 Workload ID는 별도입니다. Entra Workload ID를 켰지만 이 합성 앱은 Azure SDK를 사용하지 않아 Pod federation·데이터 역할을 추가하지 않습니다.
 
 
 ### 4.4 승인된 관리자의 두 역할 할당
 
 
-관리자가 **새 클러스터·해당 registry·참가자**를 확인하고 각 명령을 별도로 실행한다. 다른 터미널이면 위의 확인한 ID·구독을 설정한다. 생성 직후 각 역할 ID를 안전한 실습 기록에 보관하고 참가자에게 전달한다. 두 번째 할당이 실패해도 첫 번째 ID를 잃지 않도록 하며 Git·공유 캡처에 넣지 않는다.
+관리자가 **새 클러스터·해당 registry·참가자**를 확인하고 각 명령을 별도로 실행합니다. 다른 터미널이면 위의 확인한 ID·구독을 설정합니다. 생성 직후 각 역할 ID를 안전한 실습 기록에 보관하고 참가자에게 전달합니다. 두 번째 할당이 실패해도 첫 번째 ID를 잃지 않도록 하며 Git·공유 캡처에 넣지 않습니다.
 
 ```powershell
 $ErrorActionPreference = "Stop"
@@ -177,7 +177,7 @@ if ([string]::IsNullOrWhiteSpace($AcrPullAssignmentId)) { throw "The kubelet rol
 $AcrPullAssignmentId
 ```
 
-첫 번째 ID를 보관한 뒤 참가자 인가를 준비한다.
+첫 번째 ID를 보관한 뒤 참가자 인가를 준비합니다.
 
 ```powershell
 $ClusterAccessAssignmentId = az role assignment create --assignee-object-id $ParticipantObjectId --assignee-principal-type User --role "Azure Kubernetes Service RBAC Cluster Admin" --scope $ClusterId --subscription $SubscriptionId --query id --output tsv
@@ -185,7 +185,7 @@ if ([string]::IsNullOrWhiteSpace($ClusterAccessAssignmentId)) { throw "The clust
 $ClusterAccessAssignmentId
 ```
 
-참가자 터미널에서 같은 ID가 설정됐는지 확인한 뒤 보관한다. 이미 다른 역할을 보유했다는 이유로 기존 역할을 삭제하지 않는다. 이 단계에서 새로 만든 두 역할만 추적한다.
+참가자 터미널에서 같은 ID가 설정됐는지 확인한 뒤 보관합니다. 이미 다른 역할을 보유했다는 이유로 기존 역할을 삭제하지 않습니다. 이 단계에서 새로 만든 두 역할만 추적합니다.
 
 ```powershell
 if ([string]::IsNullOrWhiteSpace($AcrPullAssignmentId) -or
@@ -198,7 +198,7 @@ Set-Content -LiteralPath (Join-Path $LabDirectory "acr-grant-id.txt") -Value $Ac
 Set-Content -LiteralPath (Join-Path $LabDirectory "cluster-grant-id.txt") -Value $ClusterAccessAssignmentId -Encoding utf8NoBOM
 ```
 
-**관찰:** registry scope는 kubelet pull, cluster scope는 참가자의 Kubernetes API 접근이다. 새 할당 전파에는 수분이 걸릴 수 있다. 준비됐다는 추측으로 403을 성공 처리하지 않는다.
+**관찰:** registry scope는 kubelet pull, cluster scope는 참가자의 Kubernetes API 접근입니다. 새 할당 전파에는 수분이 걸릴 수 있습니다. 준비됐다는 추측으로 403을 성공 처리하지 않습니다.
 
 
 ### 4.5 이 실습의 kubeconfig·namespace·manifest만 사용
@@ -222,13 +222,13 @@ kubectl --kubeconfig $KubeConfigPath --context $ClusterName rollout status deplo
 kubectl --kubeconfig $KubeConfigPath --context $ClusterName get deployment,pods,services --namespace $Namespace
 ```
 
-**관찰:** node 2개가 Ready, 앱 replica 1개가 ready, Service는 ClusterIP다. Pod IP·Service IP·node IP를 구분한다. 기본 kubeconfig를 수정하거나 현재 기본 context로 `apply`하지 않는다.
+**관찰:** node 2개가 Ready, 앱 replica 1개가 ready, Service는 ClusterIP입니다. Pod IP·Service IP·node IP를 구분합니다. 기본 kubeconfig를 수정하거나 현재 기본 context로 `apply`하지 않습니다.
 
 
 ### 4.6 Port-forward와 같은 HTTP 계약 확인
 
 
-**두 번째 로컬 PowerShell 터미널**에 이 실습의 경로·이름만 설정하고 유지한다. kubeconfig 내용·토큰은 출력하지 않는다.
+**두 번째 로컬 PowerShell 터미널**에 이 실습의 경로·이름만 설정하고 유지합니다. kubeconfig 내용·토큰은 출력하지 않습니다.
 
 ```powershell
 $ErrorActionPreference = "Stop"
@@ -239,9 +239,9 @@ $Namespace = "<this-lab-namespace>"
 kubectl --kubeconfig $KubeConfigPath --context $ClusterName port-forward --namespace $Namespace service/workshop 8080:8080 --address 127.0.0.1
 ```
 
-**관찰:** `Forwarding from 127.0.0.1:8080`다. 포트가 이미 사용 중이면 이 실습의 기존 서버만 종료하거나 port-forward의 로컬 포트를 바꾸고 HTTP 요청도 같은 값으로 맞춘다. 앱용 public LoadBalancer·Ingress는 만들지 않는다.
+**관찰:** `Forwarding from 127.0.0.1:8080`입니다. 포트가 이미 사용 중이면 이 실습의 기존 서버만 종료하거나 port-forward의 로컬 포트를 바꾸고 HTTP 요청도 같은 값으로 맞춥니다. 앱용 public LoadBalancer·Ingress는 만들지 않습니다.
 
-첫 번째 터미널에서 확인한다.
+첫 번째 터미널에서 확인합니다.
 
 ```powershell
 $BaseUrl = "http://127.0.0.1:8080"
@@ -261,22 +261,22 @@ if ($Invalid.StatusCode -ne 422 -or @(Invoke-RestMethod "$BaseUrl/items").Count 
 kubectl --kubeconfig $KubeConfigPath --context $ClusterName logs deployment/workshop --namespace $Namespace --tail=20
 ```
 
-**성공 기준:** 헬스 ok, 2→3개, POST 201·read-back, 잘못된 입력 422·데이터 불변, Pod 로그의 요청 상태다. Running 상태와 함께 HTTP 응답·로그를 확인한다.
+**성공 기준:** 헬스 ok, 2→3개, POST 201·read-back, 잘못된 입력 422·데이터 불변, Pod 로그의 요청 상태입니다. Running 상태와 함께 HTTP 응답·로그를 확인합니다.
 
 
 ### 4.7 선택 private API/검사 client 경로
 
-Portal **AKS Overview → Node pools**에서 system pool의 관리 상태·scale mode·target node 수를 읽는다. 예시는 **Succeeded / Running / Manual / target2**다.
+Portal **AKS Overview → Node pools**에서 system pool의 관리 상태·scale mode·target node 수를 읽습니다. 예시는 **Succeeded / Running / Manual / target2**입니다.
 
 ![System node pool 관리 상태와 manual target2인 AKS 화면](./images/portal-aks-node-pool.png)
 
-*target 수는 원하는 capacity다. Ready nodes의 `-`는 이 화면에 Kubernetes readiness 값이 없다는 뜻이다. Nodes/Workloads 조회에는 browser/client의 private API route/DNS와 해당 Kubernetes 인가가 필요하다. 제공 private client의 `kubectl get nodes`·Pod readiness/log·HTTP를 사용해 runtime을 확인하고 private endpoint 설정은 유지한다.*
+*target 수는 원하는 capacity입니다. Ready nodes의 `-`는 이 화면에 Kubernetes readiness 값이 없다는 뜻입니다. Nodes/Workloads 조회에는 browser/client의 private API route/DNS와 해당 Kubernetes 인가가 필요합니다. 제공 private client의 `kubectl get nodes`·Pod readiness/log·HTTP를 사용해 runtime을 확인하고 private endpoint 설정은 유지합니다.*
 
-기존 public API `/32` 경로와 하나를 선택한다. **public API CIDR을 private 경로에 그대로 적용하지 않는다.** 승인된 node subnet/명시 outbound/private DNS/control identity·도달 가능한 private client를 준비한다. Standard/base Free·최소2 system nodes·지원 patch·CNI주소를 확인하고 private API/Entra/AzureRBAC/localaccounts disabled를 actual resource에서 읽는다. 준비 세부 사항은 [강사 가이드](../../../guides/instructor-guide-ko.md)를 따른다.
+기존 public API `/32` 경로와 하나를 선택합니다. **public API CIDR을 private 경로에 그대로 적용하지 않습니다.** 승인된 node subnet/명시 outbound/private DNS/control identity·도달 가능한 private client를 준비합니다. Standard/base Free·최소2 system nodes·지원 patch·CNI주소를 확인하고 private API/Entra/AzureRBAC/localaccounts disabled를 actual resource에서 읽습니다. 준비 세부 사항은 [강사 가이드](../../../guides/instructor-guide-ko.md)를 따릅니다.
 
-승인된 관리자가 control plane의 필요한 VNet/DNS/NAT권한·kubelet의 registry AcrPull·private client의 새 cluster scope API권한을 각각 준비한다. client MI는 kubelogin msi, local user는 azurecli로 구분하고 실제 can-i/node조회·Pod/probe·같은HTTP계약을 확인한다. kubeconfig는 보호된 별도파일이며 기본config를 덮지 않는다.
+승인된 관리자가 control plane의 필요한 VNet/DNS/NAT권한·kubelet의 registry AcrPull·private client의 새 cluster scope API권한을 각각 준비합니다. client MI는 kubelogin msi, local user는 azurecli로 구분하고 실제 can-i/node조회·Pod/probe·같은HTTP계약을 확인합니다. kubeconfig는 보호된 별도파일이며 기본config를 덮지 않습니다.
 
-private client의 도구·DNS·TCP443·MI 인가는 [강사 준비](../../../guides/instructor-guide-ko.md)를 따른다. 같은 namespace/manifest·localhost HTTP를 확인하고 source DB를 변경하지 않는다.
+private client의 도구·DNS·TCP443·MI 인가는 [강사 준비](../../../guides/instructor-guide-ko.md)를 따릅니다. 같은 namespace/manifest·localhost HTTP를 확인하고 source DB를 변경하지 않습니다.
 
 
 ## 5. 검증·대표 실패
@@ -292,7 +292,7 @@ private client의 도구·DNS·TCP443·MI 인가는 [강사 준비](../../../gui
 | CrashLoopBackOff·probe 실패 | 앱 로그·8080 listen·probe 경로·메모리 limit 확인 |
 | 데이터 초기화 | Pod 재시작·Recreate 업데이트는 새 메모리 저장소를 만든다는 한계 확인 |
 
-진단은 이 kubeconfig·context·namespace에 한정한다.
+진단은 이 kubeconfig·context·namespace에 한정합니다.
 
 ```powershell
 kubectl --kubeconfig $KubeConfigPath --context $ClusterName describe pods --namespace $Namespace --selector app=workshop
@@ -303,13 +303,13 @@ kubectl --kubeconfig $KubeConfigPath --context $ClusterName get events --namespa
 ## 6. 정리 — 자신이 만든 것만
 
 
-manifest 읽기만 했다면 Azure 삭제 대상이 없다. 중간 실패라면 **실제로 생성된 단계만** 정리하고 변수·기록을 복구한다. 기존 클러스터·registry를 자동 탐색해서 삭제하지 않는다.
+manifest 읽기만 했다면 Azure 삭제 대상이 없습니다. 중간 실패라면 **실제로 생성된 단계만** 정리하고 변수·기록을 복구합니다. 기존 클러스터·registry를 자동 탐색해서 삭제하지 않습니다.
 
 
 ### 6.1 Namespace와 이 실습의 role assignment
 
 
-port-forward 터미널을 `Ctrl+C`로 종료한다. 참가자 터미널에서 namespace의 태그와 이름을 확인한 뒤 삭제한다.
+port-forward 터미널을 `Ctrl+C`로 종료합니다. 참가자 터미널에서 namespace의 태그와 이름을 확인한 뒤 삭제합니다.
 
 ```powershell
 $Ns = kubectl --kubeconfig $KubeConfigPath --context $ClusterName get namespace $Namespace --output json | ConvertFrom-Json
@@ -320,13 +320,13 @@ if ($Namespace -ne "amw-$LabId" -or $Ns.metadata.labels.workshop -ne "azure-migr
 kubectl --kubeconfig $KubeConfigPath --context $ClusterName get deployment,pods,services --namespace $Namespace
 ```
 
-대상과 영향을 확인하고 승인한 경우에만 삭제한다.
+대상과 영향을 확인하고 승인한 경우에만 삭제합니다.
 
 ```powershell
 kubectl --kubeconfig $KubeConfigPath --context $ClusterName delete namespace $Namespace --wait=true
 ```
 
-삭제 확인·승인은 이 명령을 실행하기 전에 한다. 이후 승인된 관리자는 4.4에서 보관한 **정확한 두 assignment ID**만 확인·삭제한다. registry의 기존 역할이나 구독의 역할을 일괄 삭제하지 않는다.
+삭제 확인·승인은 이 명령을 실행하기 전에 합니다. 이후 승인된 관리자는 4.4에서 보관한 **정확한 두 assignment ID**만 확인·삭제합니다. registry의 기존 역할이나 구독의 역할을 일괄 삭제하지 않습니다.
 
 ```powershell
 $AcrPullAssignmentId = (Get-Content -Raw -LiteralPath (Join-Path $LabDirectory "acr-grant-id.txt")).Trim()
@@ -339,7 +339,7 @@ az role assignment list --scope $RegistryId --subscription $SubscriptionId --que
 az role assignment list --scope $ClusterId --subscription $SubscriptionId --query "[?id=='$ClusterAccessAssignmentId'].{id:id,principal:principalId,scope:scope}" --output table
 ```
 
-첫 할당이 이 cluster의 kubelet, 두 번째가 이 실습의 참가자인지 대조하고 삭제 승인을 받는다. 이 역할 정리는 registry 자체 삭제가 아니라 **이 소비자가 추가한 grant만 회수**하는 것이다. 확인한 경우에만 다음을 실행한다.
+첫 할당이 이 cluster의 kubelet, 두 번째가 이 실습의 참가자인지 대조하고 삭제 승인을 받습니다. 이 역할 정리는 registry 자체 삭제가 아니라 **이 소비자가 추가한 grant만 회수**하는 것입니다. 확인한 경우에만 다음을 실행합니다.
 
 ```powershell
 az role assignment delete --ids $AcrPullAssignmentId --subscription $SubscriptionId
@@ -366,7 +366,7 @@ foreach ($Name in @($ResourceGroupName, $NodeGroupName)) {
 }
 ```
 
-AKS 삭제가 managed node 그룹의 정리도 수행하는지 확인한다. 남은 그룹을 바로 강제 삭제하지 말고 실패 원인·과금 리소스를 강사와 확인한다. 로컬 kubeconfig·렌더링 파일·두 역할 ID 파일은 정리 확인 후 해당 **4개 파일만** 제거하고 빈 실습 폴더를 지운다. 다음 세션에서 값이 필요하면 먼저 안전한 실습 기록으로 보관한다.
+AKS 삭제가 managed node 그룹의 정리도 수행하는지 확인합니다. 남은 그룹을 바로 강제 삭제하지 말고 실패 원인·과금 리소스를 강사와 확인합니다. 로컬 kubeconfig·렌더링 파일·두 역할 ID 파일은 정리 확인 후 해당 **4개 파일만** 제거하고 빈 실습 폴더를 지웁니다. 다음 세션에서 값이 필요하면 먼저 안전한 실습 기록으로 보관합니다.
 
 ```powershell
 Remove-Item -LiteralPath $KubeConfigPath
@@ -376,7 +376,7 @@ Remove-Item -LiteralPath (Join-Path $LabDirectory "cluster-grant-id.txt")
 Remove-Item -LiteralPath $LabDirectory
 ```
 
-다른 파일이 있으면 빈 폴더 삭제가 실패하므로 내용을 확인하고 전체 `lab-output`을 재귀 삭제하지 않는다. 공유 이미지 그룹은 마지막 소비자가 끝난 후 [공통 준비의 정리](../../../shared/container-image/README-ko.md#6-정리--마지막-소비자가-끝난-다음)를 따르며 기존 승인 입력은 삭제하지 않는다.
+다른 파일이 있으면 빈 폴더 삭제가 실패하므로 내용을 확인하고 전체 `lab-output`을 재귀 삭제하지 않습니다. 공유 이미지 그룹은 마지막 소비자가 끝난 후 [공통 준비의 정리](../../../shared/container-image/README-ko.md#6-정리--마지막-소비자가-끝난-다음)를 따르며 기존 승인 입력은 삭제하지 않습니다.
 
 
 ## 7. 실제 이전에서 추가로 확인할 사항
@@ -386,7 +386,7 @@ Remove-Item -LiteralPath $LabDirectory
 - IRSA/Pod Identity→Workload ID, kubelet pull과 앱 데이터 권한 분리.
 - IP 계획·egress·API 접근, private 경계와 최소 namespace 권한.
 - 별도 user pool·HA·PDB·배포 전략·영속 데이터·백업·컷오버·롤백.
-- 관측성·패치·업그레이드·비용. 이 작은 재배포는 실제 EKS 이전 검증이 아니다.
+- 관측성·패치·업그레이드·비용. 이 작은 재배포는 실제 EKS 이전 검증이 아닙니다.
 
 
 ## 8. 출처·버전·확인 범위

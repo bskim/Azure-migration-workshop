@@ -73,18 +73,18 @@ Read the official [Storage Mover creation guidance](https://learn.microsoft.com/
 | Mover management-resource region | West US 3 (`westus3`), illustrative location; verify current availability for future adoption |
 | Source storage-account region | Korea Central (`koreacentral`), unchanged |
 | Target storage-account region | Korea Central (`koreacentral`), unchanged |
-| Copy engine and data path | Verify the chosen native source/target topology; the management location alone does not determine or prove the transfer path |
+| Copy engine and data path | Review the selected engine and source/target topology to identify the transfer path, and record it separately from the management location |
 | Management metadata residency | Review the location and treatment of endpoint/project/job configuration and any enabled logs under organizational requirements before approval |
 
 Management locations can differ from storage availability. Confirm the current storageMovers location list and any required registration for the chosen subscription before a separately approved deployment. Introduction-only reading needs no registration. The pictured West US 3 management location is an example, not a required workshop region or evidence about Korea Central migration support.
 
-The Blob sample accounts and private endpoint/DNS configuration are separate from this management-location illustration. Selecting West US 3 management does **not** prove that all copy data flows through West US 3, establish private-network support or authorize relocation of storage, databases or compute. Record both region inputs explicitly rather than reusing one generic Location value.
+The Blob sample accounts and private endpoint/DNS configuration are separate from the illustrated management location. Record both region inputs explicitly, then review the selected copy-data path and private-network requirements. Any relocation of storage, databases or compute needs its own approval.
 
 ![Storage Mover Essentials showing management location West US 3](./images/portal-management-region.png)
 
 *This tightly cropped Essentials view shows the actual Mover **management-resource location** only. It is a management-location illustration, not a copy result. Source/target Korea Central regions and private settings are not visible here; those require independent resource checks. The image does not verify endpoints, roles, a job, copy-data path or private-copy support.*
 
-The management location does not prove data routing or private topology support. Future execution follows the source-specific official scenario and separate customer approvals; this workshop stops at service introduction.
+Review copy-data routing and private topology support separately from the management location. Future execution follows the source-specific official scenario and separate customer approvals; this workshop stops at service introduction.
 
 ## 4. Step-by-step lab
 

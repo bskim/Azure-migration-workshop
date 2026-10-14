@@ -79,7 +79,7 @@ if ($Exists -ne "false") { throw "Use a fresh networking lab group." }
 
 ### 4.3. Create the network without another compute track
 
-Create the dedicated group, two subnets and server NSG association. Observe subnet prefixes and default rules, including priority 65000 AllowVNetInBound and 65500 DenyAllInBound. An empty subnet does not prove HTTP reachability. Configuration-only learners may inspect the rule creation commands in steps 4.6–4.7 and then clean up; do not run VM probes in that mode.
+Create the dedicated group, two subnets and server NSG association. Observe subnet prefixes and default rules, including priority 65000 AllowVNetInBound and 65500 DenyAllInBound. After subnet configuration, inspect the endpoints and test the HTTP connection. Configuration-only learners may inspect the rule creation commands in steps 4.6–4.7 and then clean up; do not run VM probes in that mode.
 
 ```powershell
 az group create --name $ResourceGroupName --location $Location --subscription $SubscriptionId --tags Workshop=azure-migration-networking LabId=$LabId --output table
